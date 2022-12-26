@@ -22,23 +22,50 @@ if(isset($_POST["cari"]))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
+    <style>
+        .loader
+        {
+            width: 100px;
+            position: absolute;
+            top: 152px;
+            z-index: -1;
+            left: 300px;
+            display: none;
+
+        }
+        @media print{
+            .logout, .tambah, .form-cari, .aksi
+            {
+                display: none;
+
+            }
+
+        }
+    </style>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="js/script.js"></script>
 </head>
 <body>
-    <a href="logout.php">Log out</a>
+    <a href="logout.php" class="logout">Log out</a> | <a href="cetak.php">Cetak</a>
+
     <h1>Daftar Mahasiswa</h1>
-    <a href="tambah.php">Tambah data mahasiswa</a>
+    
+    <a href="tambah.php" class="tambah">Tambah data mahasiswa</a>
     <br><br>
-    <form action="" method = "post">
-        <input type="text" name="keyword" size="40" autofocus placeholder="masukkan keyword pencarian"autocomplete="off">
-        <button type = "submit" name="cari">Cari</button>
+    
+    <form action="" method = "post" class="form-cari">
+        <input type="text" name="keyword" size="40" autofocus placeholder="masukkan keyword pencarian"autocomplete="off" id="keyword">
+        <button type = "submit" name="cari"id="tombol-cari">Cari</button>
+        <img src="img/loader.gif" class="loader">
 
     </form>
     <br>
+    <div id="container">
 
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
             <th>No.</th>
-            <th>Aksi</th>
+            <th class="aksi">Aksi</th>
             <th>Gambar</th>
             <th>NRP</th>
             <th>Nama</th>
@@ -49,7 +76,7 @@ if(isset($_POST["cari"]))
         <?php foreach($mahasiswa as $row): ?>
         <tr>
             <td> <?= $i; ?></td>
-            <td>
+            <td class="aksi">
                 <a href="ubah.php?id=<?= $row ["id"]?>">Ubah</a> |
                 <a href="delete.php?id=<?= $row ["id"]; ?>"onclick= "return confirm('yakin?');">delete</a>
             </td>
@@ -63,5 +90,8 @@ if(isset($_POST["cari"]))
         <?php endforeach; ?>
 
     </table>
+    </div>
+    
+   
 </body>
 </html>

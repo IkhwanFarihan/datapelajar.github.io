@@ -1,11 +1,36 @@
 <?php
 session_start();
+require 'function.php';
+
+// cek cookienya
+// if( isset($_COOKIE['login']))
+// {
+//     if($_COOKIE['login'] == 'true')
+//     {
+//         $_SESSION['login'] = true;
+//     }
+// }
+if(isset($_COOKIE['id']) && isset($_COOKIE['key']))
+{
+    $id = $_COOKIE['id'];
+    $key = $_COOKIE['key'];
+
+    // ambil username berdasarkan result id
+    $result = mysqli_query($conn,"SELECT username FROM user WHERE id=$id");
+    $row = mysqli_fetch_assoc($result);
+    // cek coookie dan username
+    if($key === hash('sha256',$row['username']))
+    {
+        $_SESSION['login'] = true;
+    }
+}
+
 if(isset($_SESSION["login"]))
 {
     header("Location: index.php");
     exit;
 }
-require 'function.php';
+
 if( isset($_POST["login"])){
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -18,8 +43,17 @@ if( isset($_POST["login"])){
         if( password_verify($password, $row["password"]))
         {
             // set session
-            $_SESSION["login"]=true;
-            header( "Location: index.php");
+            $_SESSION["login"] = true;
+
+            // cek remember me
+            if(isset($_POST['remember']))
+            {
+                // buat cookie
+                setcookie('nombor',$row['id'], time () + 60);
+                setcookie('key', hash('sha256',$row['username']),time()+60);
+                // setcookie('login','true', time() + 60);
+            }
+            header("Location: index.php");
             exit;
             
             
@@ -61,6 +95,10 @@ if( isset($_POST["login"])){
             <li>
                 <label for="password">Password :</label>
                 <input type="text"name="password"id="password">
+            </li>
+            <li>
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Remember me </label>
             </li>
             <li>
                 <button type="submit" name="login">Login</button>

@@ -9,6 +9,7 @@ if( isset($_POST["register"]))
                     alert ('user baru berhasil ditambahkan !');
 
         </script>";
+        echo"<script>location='index.php'</script>";
     }
     else
     {
@@ -55,6 +56,9 @@ if( isset($_POST["register"]))
             </li>
             <li>
                 <button type="submit" name="register">Register !</button>
+            </li>
+            <li>
+                <button type="submit" name="dregister"><a href="login.php">Login</button>
             </li>
         </ul>
     </form>
