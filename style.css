@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: #111827;
+  color: white;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: 400px;
+  top: 60px;
+}
+form {
+  line-height: 36px;
+  justify-content: center;
+  align-items: center;
+  display: block;
+}
+button {
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  border-radius: 50px;
+  width: 120px;
+  height: 36px;
+  border-style: none;
+  left: 100px;
+  position: absolute;
+}
